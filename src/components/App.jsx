@@ -1,42 +1,38 @@
 import React, { Component } from 'react';
-import brace from 'brace';
-import AceEditor from 'react-ace';
-import 'brace/mode/java';
-import 'brace/theme/monokai';
 import {
 	Window,
 	Toolbar,
-	Actionbar,
-	ButtonGroup,
-	Button,
 	Content,
 	Pane
 } from 'react-photonkit';
-
+import Tabs from './Tabs';
+import Editor from './Editor';
 
 class App extends Component {
 	constructor(props) {
 	  super(props);
-	  this.state = {
-	  	mode: 'java',
-	  	theme: 'monokai'
-	  };
 	}
 	render() {
+		const editorWrapper = {
+			width: '100%',
+			height: '96.8%',
+			overflow: 'hidden'
+		}
+		const paneStyles = {
+			overflow: 'hidden',
+			paddingRight: 0
+		}
 		return (
 			<Window>
 			  <Content>
 					<Pane ptSize="sm" sidebar></Pane>
-					<Pane>
-						<AceEditor
-						    mode="java"
-						    theme="monokai"
-						    height="100%"
-						    width="100%"
-						    name="UNIQUE_ID_OF_DIV"
-						    editorProps={{$blockScrolling: true}}
-						  />
-					</Pane>
+					<div className="pane" style={paneStyles}>
+						<Tabs />
+						<div style={{ clear: 'both'}}></div>
+						<div style={editorWrapper}>
+							<Editor />
+						</div>
+					</div>
 			  </Content>
 			  <Toolbar ptType="footer">
 			  	
