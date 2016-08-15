@@ -12,9 +12,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          cacheDirectory: true,
-          optional: ['runtime'],
-          stage: 0
+          cacheDirectory: true
         } 
       },
       { 
@@ -22,9 +20,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          cacheDirectory: true,
-          optional: ['runtime'],
-          stage: 0
+          cacheDirectory: true
         }
       },
       { test: /\.s?css$/, loader: 'style!css!sass' }
