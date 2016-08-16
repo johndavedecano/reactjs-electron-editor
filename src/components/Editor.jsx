@@ -12,7 +12,7 @@ class Editor extends Component {
 				<AceEditor
 				  mode="javascript"
 				  theme="monokai"
-				  name={this.props.active}
+				  name="myeditor"
 				  enableLiveAutocompletion={true}
 				  enableBasicAutocompletion={true}
 				  width="100%"
@@ -29,4 +29,3 @@ export default connect(function(state) {
   	active: state.tabs.active
   }
 })(Editor);
-
