@@ -2,7 +2,7 @@ import {
   TAB_CREATED,
   TAB_CLOSED,
   TAB_ACTIVE_SET,
-  TAB_UDPATED
+  TAB_UPDATED
 } from './../constants';
 
 export function closeTab(uid) {

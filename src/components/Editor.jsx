@@ -21,29 +21,46 @@ import 'brace/mode/css';
 
 import 'brace/theme/monokai';
 
-class Editor extends Component {
-	render() {
-		const tabSetting = this.props.tabs[this.props.active];
+import { updateTab } from './../actions/tabs';
 
-		return (
-				<AceEditor
-				  mode={tabSetting.mode}
-				  theme="monokai"
-				  name="UNIQUE_ID_OF_DIV"
-				  enableLiveAutocompletion={true}
-				  enableBasicAutocompletion={true}
-				  width="100%"
-				  height="100%"
-				  editorProps={{$blockScrolling: true}}
-					value={tabSetting.value}
-				/>
-		);
-	}
+class Editor extends Component {
+  constructor(props) {
+    super(props);
+    this.onChange = this.onChange.bind(this);
+  }
+  onChange(value) {
+    return this.props.dispatch(
+      updateTab(
+        this.getTabValues(value)
+      )
+    );
+  }
+  getTabValues(value) {
+    const active = this.props.tabs[this.props.active];
+    active.value = value;
+
+    return active;
+  }
+  render() {
+    const tabSetting = this.props.tabs[this.props.active];
+    return (
+      <AceEditor
+        mode={tabSetting.mode}
+        theme="monokai"
+        name="UNIQUE_ID_OF_DIV"
+        width="100%"
+        height="100%"
+        value={tabSetting.value}
+        editorProps={{$blockScrolling: true}}
+        onChange={this.onChange}
+      />
+    );
+  }
 }
 
 export default connect(function(state) {
   return {
-  	tabs: state.tabs.items,
-  	active: state.tabs.active
+    tabs: state.tabs.items,
+    active: state.tabs.active
   }
 })(Editor);

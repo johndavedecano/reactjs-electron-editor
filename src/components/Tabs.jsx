@@ -13,7 +13,7 @@ class Tabs extends Component {
 	getInitialTabState() {
 		return {
 			uid: uuid.v1(),
-			filename: 'Untitled ' + this.props.tabs.length,
+			filename: 'Untitled-' + this.props.tabs.length,
 			mode: 'javascript',
 			value: ''
 		}
@@ -30,7 +30,7 @@ class Tabs extends Component {
 			<div className="tab-group">
 				{this.props.tabs.map((tab, key) => {
 					return (
-						<TabItem setting={tab} key={key} active={(this.props.active == key)}/>
+						<TabItem setting={tab} index={key} key={key} active={(this.props.active == key)}/>
 					);
 				})}
 			  <div className="tab-item tab-item-fixed"  onClick={this.createTab} style={{ cursor: 'pointer' }}>
