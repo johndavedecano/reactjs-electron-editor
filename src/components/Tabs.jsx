@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Editor from './Editor';
 import { connect } from 'react-redux';
 import TabItem from './TabItem';
+import { createTab } from './../actions/tabs';
 
 class Tabs extends Component {
 	constructor(props) {
@@ -9,7 +10,7 @@ class Tabs extends Component {
 		this.createTab = this.createTab.bind(this);
 	}
 	createTab() {
-		console.log("Creating some new tabs...");
+		return this.props.dispatch(createTab());
 	}
 	render() {
 		return (
