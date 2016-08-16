@@ -1,25 +1,31 @@
-// import {
-// 	IMAGE_LOADED,
-// 	IMAGE_FILTERS,
-// 	IMAGE_OBJECT_SAVED
-// } from './../constants';
+import { 
+  TAB_CREATED,
+  TAB_CLOSED,
+  TAB_ACTIVE_SET
+} from './../constants';
 
 const tabsState = {
 	items: [{
 		uid: 'untitled-1',
 		filename: 'Untitled',
-		mode: 'java',
-		value: 'fdsfsfsdfsd'
+		mode: 'html',
+		value: ''
 	}],
 	active: 0
 };
 
-function tabs(state = tabsState, action) {
+export default function tabs(state = tabsState, action) {
 	switch(action.type)  {
+		case TAB_CREATED:
+			state.items.push(action.tab);
+			return {
+				items: state.items,
+				active: state.items.length - 1
+			};
+		break;
+
 		default:
 			return state;
 		break;
 	}
 }
-
-export default tabs;

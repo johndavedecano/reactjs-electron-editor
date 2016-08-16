@@ -3,14 +3,27 @@ import Editor from './Editor';
 import { connect } from 'react-redux';
 import TabItem from './TabItem';
 import { createTab } from './../actions/tabs';
+import uuid from 'node-uuid';
 
 class Tabs extends Component {
 	constructor(props) {
 		super(props);
 		this.createTab = this.createTab.bind(this);
 	}
+	getInitialTabState() {
+		return {
+			uid: uuid.v1(),
+			filename: 'Untitled',
+			mode: 'javascript',
+			value: ''
+		}
+	}
 	createTab() {
-		return this.props.dispatch(createTab());
+		return this.props.dispatch(
+			createTab(
+				this.getInitialTabState()
+			)
+		);
 	}
 	render() {
 		return (

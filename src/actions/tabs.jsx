@@ -4,9 +4,6 @@ import {
   TAB_ACTIVE_SET
 } from './../constants';
 
-import uuid from 'node-uuid';
-
-
 export function closeTab(uid) {
   return {
     type: TAB_CLOSED,
