@@ -6,8 +6,11 @@
 
 const tabsState = {
 	items: [{
+		order: 1,
+		uid: 'untitled-1',
 		filename: 'Untitled',
-		mode: 'html'
+		mode: 'html',
+		value: 'fdsfsfsdfsd'
 	}],
 	active: 0
 };

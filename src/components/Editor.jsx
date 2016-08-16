@@ -8,11 +8,13 @@ import 'brace/theme/monokai';
 
 class Editor extends Component {
 	render() {
+		const tabSetting = this.props.tabs[this.props.active];
+		console.log(tabSetting);
 		return (
 				<AceEditor
 				  mode="javascript"
 				  theme="monokai"
-				  name="myeditor"
+				  name="UNIQUE_ID_OF_DIV"
 				  enableLiveAutocompletion={true}
 				  enableBasicAutocompletion={true}
 				  width="100%"
