@@ -24,6 +24,27 @@ export default function tabs(state = tabsState, action) {
 			};
 		break;
 
+		case TAB_CLOSED:
+			// Creates a new tab if the number of tabs is one
+			if (state.items.length < 2) {
+				return {
+					items: [{
+						uid: 'untitled-1',
+						filename: 'Untitled',
+						mode: 'html',
+						value: ''
+					}],
+					active: 0
+				}
+			}
+			return {
+				items: state.items.filter((item) => {
+					return item.uid !== action.uid;
+				}),
+				active: 0
+			}
+		break;
+
 		default:
 			return state;
 		break;

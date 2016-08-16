@@ -1,7 +1,8 @@
 import { 
   TAB_CREATED,
   TAB_CLOSED,
-  TAB_ACTIVE_SET
+  TAB_ACTIVE_SET,
+  TAB_UDPATED
 } from './../constants';
 
 export function closeTab(uid) {
@@ -22,5 +23,12 @@ export function setActive(index) {
   return {
     type: TAB_ACTIVE_SET,
     index
+  }
+}
+
+export function updateTab(tab) {
+  return {
+    type: TAB_UPDATED,
+    tab
   }
 }

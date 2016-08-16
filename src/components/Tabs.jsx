@@ -13,7 +13,7 @@ class Tabs extends Component {
 	getInitialTabState() {
 		return {
 			uid: uuid.v1(),
-			filename: 'Untitled',
+			filename: 'Untitled ' + this.props.tabs.length,
 			mode: 'javascript',
 			value: ''
 		}
