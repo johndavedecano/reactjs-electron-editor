@@ -7,6 +7,7 @@ import {
 } from 'react-photonkit';
 import Tabs from './Tabs';
 import Editor from './Editor';
+import Files from './Files';
 
 class App extends Component {
 	constructor(props) {
@@ -25,7 +26,9 @@ class App extends Component {
 		return (
 			<Window>
 			  <Content>
-					<Pane ptSize="sm" sidebar></Pane>
+					<Pane ptSize="sm" sidebar>
+						<Files />
+					</Pane>
 					<div className="pane" style={paneStyles}>
 						<Tabs />
 						<div style={{ clear: 'both'}}></div>
