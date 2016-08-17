@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Treebeard} from 'react-treebeard';
-
 const data = {
     name: 'root',
     toggled: true,
@@ -32,14 +31,20 @@ const data = {
     ]
 };
 
-
 class Files extends Component {
 	constructor(props) {
 	  super(props);
     this.onToggle = this.onToggle.bind(this);
+    this.state = {
+      cursor: {
+        active: true
+      }
+    }
 	}
-  onToggle(node, toggled){
-    if(this.state.cursor){this.state.cursor.active = false;}
+  onToggle(node, toggled) {
+    if (this.state.cursor) {
+      this.state.cursor.active = false;
+    }
     node.active = true;
     if(node.children){ node.toggled = toggled; }
     this.setState({ cursor: node });

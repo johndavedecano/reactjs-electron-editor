@@ -8,10 +8,19 @@ import {
 import Tabs from './Tabs';
 import Editor from './Editor';
 import Files from './Files';
+import Languages from './Languages';
+import { connect } from 'react-redux';
+import { updateTab } from './../actions/tabs';
 
 class App extends Component {
 	constructor(props) {
 	  super(props);
+	  this.onChangeMode = this.onChangeMode.bind(this);
+	}
+	onChangeMode(setting) {
+		return this.props.dispatch(
+			updateTab(setting)
+		);
 	}
 	render() {
 		const editorWrapper = {
@@ -23,6 +32,7 @@ class App extends Component {
 			overflow: 'hidden',
 			paddingRight: 0
 		}
+		const activeTab = this.props.tabs[this.props.active];
 		return (
 			<Window>
 			  <Content>
@@ -33,16 +43,28 @@ class App extends Component {
 						<Tabs />
 						<div style={{ clear: 'both'}}></div>
 						<div style={editorWrapper}>
-							<Editor />
+							<Editor setting={activeTab}/>
 						</div>
 					</div>
 			  </Content>
-			  <Toolbar ptType="footer">
-			  	
-			  </Toolbar>
+				<footer className="toolbar toolbar-footer">
+				  <div className="toolbar-actions">
+				    <button className="btn btn-default">
+				      Cancel
+				    </button>
+				    <div className="pull-right">
+				      	<Languages setting={activeTab} onChange={this.onChangeMode} />
+				    </div>
+				  </div>
+				</footer>
 			</Window>
 		);
 	}
 }
 
-export default App;
+export default connect(function(state) {
+  return {
+    tabs: state.tabs.items,
+    active: state.tabs.active
+  }
+})(App);

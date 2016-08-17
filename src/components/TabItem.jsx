@@ -8,7 +8,8 @@ class TabItem extends Component {
 		this.closeTab = this.closeTab.bind(this);
 		this.setActive = this.setActive.bind(this);
 	}
-	closeTab() {
+	closeTab(e) {
+		e.stopPropagation();
 		return this.props.dispatch(
 			closeTab(
 				this.props.setting.uid
@@ -16,7 +17,6 @@ class TabItem extends Component {
 		);
 	}
 	setActive() {
-		
 		if (this.props.index === this.props.active) {
 			return false;
 		}

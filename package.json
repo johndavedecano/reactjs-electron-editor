@@ -31,6 +31,8 @@
     "react-flexbox-grid": "^0.10.2",
     "react-photonkit": "^0.4.1",
     "react-redux": "^4.4.5",
+    "react-select": "^1.0.0-beta14",
+    "react-textselect": "^0.2.0",
     "react-treebeard": "^1.1.2",
     "redux": "^3.5.2",
     "sass-loader": "^4.0.0",

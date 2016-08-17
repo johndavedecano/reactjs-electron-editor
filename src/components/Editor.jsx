@@ -18,9 +18,7 @@ import 'brace/mode/golang';
 import 'brace/mode/csharp';
 import 'brace/mode/coffee';
 import 'brace/mode/css';
-
 import 'brace/theme/monokai';
-
 import { updateTab } from './../actions/tabs';
 
 class Editor extends Component {
@@ -45,7 +43,7 @@ class Editor extends Component {
     const tabSetting = this.props.tabs[this.props.active];
     return (
       <AceEditor
-        mode={tabSetting.mode}
+        mode={this.props.setting.mode}
         theme="monokai"
         name="UNIQUE_ID_OF_DIV"
         width="100%"
@@ -57,6 +55,10 @@ class Editor extends Component {
     );
   }
 }
+
+Editor.propTypes = {
+  setting: React.PropTypes.object.isRequired
+};
 
 export default connect(function(state) {
   return {
