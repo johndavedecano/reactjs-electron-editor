@@ -20,7 +20,6 @@ export default function tabs(state = tabsState, action) {
 	{
 		case TAB_CREATED:
 			state.items.push(action.tab);
-			console.log(state.items);
 			return Object.assign({}, state, {
 				items: state.items,
 				active: state.items.length - 1
@@ -55,7 +54,6 @@ export default function tabs(state = tabsState, action) {
 				});
 			}
 		case TAB_ACTIVE_SET:
-		console.log("Active set");
 			return Object.assign({}, state, {
 				active: action.index
 			});

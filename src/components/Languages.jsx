@@ -3,29 +3,15 @@ import React, { Component } from 'react';
 class Languages extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			languages: [
-				{ value: 'javascript', label: 'javascript' },
-				{ value: 'java', label: 'java' },
-				{ value: 'python', label: 'python' },
-				{ value: 'xml', label: 'xml' },
-				{ value: 'ruby', label: 'ruby' },
-				{ value: 'sass', label: 'sass' },
-				{ value: 'markdown', label: 'markdown' },
-				{ value: 'mysql', label: 'mysql' },
-				{ value: 'json', label: 'json' },
-				{ value: 'html', label: 'html' },
-				{ value: 'handlebars', label: 'handlebars' },
-				{ value: 'golang', label: 'golang' },
-				{ value: 'csharp', label: 'csharp' },
-				{ value: 'coffee', label: 'coffee' },
-				{ value: 'css', label: 'css' }
-			]
-		}
 		this.onChangeMode = this.onChangeMode.bind(this);
+		this.state = {
+			value: 'javascript'
+		}
 	}
-	componentDidMount() {
-		console.log(this.props);
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			value: nextProps.setting.mode
+		});
 	}
 	onChangeMode(e) {
 		const setting = Object.assign(
@@ -33,6 +19,10 @@ class Languages extends Component {
 			this.props.setting,
 			{ mode: e.target.value }
 		);
+
+		this.setState({
+			value: e.target.value
+		});
 
 		return this.props.onChange(setting);
 	}
@@ -47,12 +37,22 @@ class Languages extends Component {
 		return (
 			<div style={containerStyle}>
 				<select onChange={this.onChangeMode}
-					value={this.props.setting.mode}>
-					{this.state.languages.map((lang, key) => {
-						return (
-							<option value={lang.value} key={key}>{lang.label}</option>
-						);
-					})}
+					value={this.state.value}>
+					<option value="javascript">javascript</option>
+					<option value="java">java</option>
+					<option value="python">python</option>
+					<option value="xml">xml</option>
+					<option value="ruby">ruby</option>
+					<option value="sass">sass</option>
+					<option value="markdown">markdown</option>
+					<option value="mysql">mysql</option>
+					<option value="json">json</option>
+					<option value="html">html</option>
+					<option value="handlebars">handlebars</option>
+					<option value="golang">golang</option>
+					<option value="csharp">csharp</option>
+					<option value="coffee">coffee</option>
+					<option value="css">css</option>
 				</select>
 			</div>
 		);
