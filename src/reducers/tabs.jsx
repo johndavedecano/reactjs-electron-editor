@@ -7,7 +7,7 @@ import {
 
 const tabsState = {
 	items: [{
-		uid: 'untitled-1',
+		uid: 'initial-tab',
 		filename: 'Untitled',
 		mode: 'html',
 		value: ''
@@ -29,7 +29,7 @@ export default function tabs(state = tabsState, action) {
 			if (state.items.length < 2) {
 				return {
 					items: [{
-						uid: 'untitled',
+						uid: 'initial-tab',
 						filename: 'Untitled',
 						mode: 'html',
 						value: ''
@@ -58,9 +58,13 @@ export default function tabs(state = tabsState, action) {
 				active: action.index
 			});
 		case TAB_UPDATED:
-			state.items[state.active] = action.tab;
+			state.items[state.active] = Object.assign({},
+				state.items[state.active],
+				action.tab
+			);
 			return Object.assign({}, state, {
-				items: state.items
+				items: state.items,
+				active: state.active
 			});
 		default:
 			return state;

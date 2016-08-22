@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import brace from 'brace';
 import AceEditor from 'react-ace';
 
+import 'brace/mode/php';
+import 'brace/mode/jsx';
 import 'brace/mode/javascript';
 import 'brace/mode/java';
 import 'brace/mode/python';
@@ -25,44 +27,53 @@ class Editor extends Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
+    this.state = {
+      setting: {
+        mode: 'javascript',
+        value: ''
+      }
+    }
   }
   onChange(value) {
-    return this.props.dispatch(
-      updateTab(
-        this.getTabValues(value)
-      )
-    );
+    this.setState({
+      setting: {
+        ...this.state.setting,
+        value: value
+      }
+    });
+    return this.props.onChange(Object.assign({},
+      this.props.setting,
+      { value: value }
+    ));
   }
-  getTabValues(value) {
-    const active = this.props.tabs[this.props.active];
-    active.value = value;
-
-    return active;
-  }
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			setting: nextProps.setting
+		});
+	}
   render() {
-    const tabSetting = this.props.tabs[this.props.active];
     return (
       <AceEditor
-        mode={this.props.setting.mode}
+        ref="code"
+        mode={this.state.setting.mode}
         theme="monokai"
         name="UNIQUE_ID_OF_DIV"
         width="100%"
         height="100%"
-        value={tabSetting.value}
-        editorProps={{$blockScrolling: true}}
+        value={this.state.setting.value}
+        editorProps={{$blockScrolling: Infinity }}
         onChange={this.onChange}
+        onLoad={(editor) => {
+          editor.renderer.setScrollMargin(15, 50);
+        }}
       />
     );
   }
 }
 
 Editor.propTypes = {
-  setting: React.PropTypes.object.isRequired
+  setting: React.PropTypes.object.isRequired,
+  onChange: React.PropTypes.func.isRequired
 };
 
-export default connect(function(state) {
-  return {
-    tabs: state.tabs.items,
-    active: state.tabs.active
-  }
-})(Editor);
+export default Editor;

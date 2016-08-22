@@ -39,6 +39,8 @@ class Languages extends Component {
 				<select onChange={this.onChangeMode}
 					value={this.state.value}>
 					<option value="javascript">javascript</option>
+					<option value="php">php</option>
+					<option value="jsx">jsx</option>
 					<option value="java">java</option>
 					<option value="python">python</option>
 					<option value="xml">xml</option>

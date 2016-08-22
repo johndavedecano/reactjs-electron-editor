@@ -2,8 +2,11 @@
 
 const {
   app,
-  BrowserWindow
+  BrowserWindow,
+  Menu
 } = require('electron');
+
+const MenuBuilder = require('./src/common/menu');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -11,7 +14,10 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600});
+  mainWindow = new BrowserWindow({width: 1024, height: 768});
+
+  // Automatically maximize the window.
+  mainWindow.maximize();
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/dist/index.html');
@@ -26,6 +32,9 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+  // Application menu. Automatically detects the current environment.
+  // Selects Win or Mac object depending on the platform.
+  Menu.setApplicationMenu(MenuBuilder);
 }
 
 // This method will be called when Electron has finished

@@ -1,0 +1,20 @@
+module.exports = {
+  js: "javascript",
+  jsx: "jsx",
+  php: "php",
+  java: "java",
+  py: "python",
+  xml: "xml",
+  rb: "ruby",
+  sass: "sass",
+  md: "markdown",
+  sql: "mysql",
+  json: "json",
+  html: "html",
+  htm: "html",
+  hbs: "handlebars",
+  go: "golang",
+  cs: "csharp",
+  coffee: "coffee",
+  css: "css"
+};
