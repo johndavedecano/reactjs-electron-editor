@@ -25,6 +25,7 @@ class App extends Component {
 		this.mountListeners = this.mountListeners.bind(this);
 	  	this.onChangeSetting = this.onChangeSetting.bind(this);
 		this.onFileOpen = this.onFileOpen.bind(this);
+		this.onFolderOpen = this.onFolderOpen.bind(this);
 		this.onCreate = this.onCreate.bind(this);
 		this.mountListeners();
 	}
@@ -40,26 +41,35 @@ class App extends Component {
 	}
 	mountListeners() {
 		this.onFileOpen();
+		this.onFolderOpen();
+	}
+	onFolderOpen() {
+		console.log("Opening...");
+		ipcRenderer
+			.on('folderOpened', (event, files) => {
+				console.log(files);
+			});
 	}
 	onFileOpen() {
-		ipcRenderer.on('fileOpened', (event, file) => {
-			let activeTab = this.props.tabs[this.props.active];
-			if (this.isFileAlreadyOpened(file.name)) return false;
-			if (activeTab.value == '') {
-				this.props.dispatch(updateTab({
-					value: file.contents,
-					filename: file.name,
-					mode: (!mimes[file.extension]) ? 'json' : mimes[file.extension]
-				}));
-			} else {
-				this.props.dispatch(createTab({
-					uid: uuid.v1(),
-					value: file.contents,
-					filename: file.name,
-					mode: (!mimes[file.extension]) ? 'json' : mimes[file.extension]
-				}));
-			}
-		});
+		ipcRenderer
+			.on('fileOpened', (event, file) => {
+				let activeTab = this.props.tabs[this.props.active];
+				if (this.isFileAlreadyOpened(file.name)) return false;
+				if (activeTab.value == '') {
+					this.props.dispatch(updateTab({
+						value: file.contents,
+						filename: file.name,
+						mode: (!mimes[file.extension]) ? 'json' : mimes[file.extension]
+					}));
+				} else {
+					this.props.dispatch(createTab({
+						uid: uuid.v1(),
+						value: file.contents,
+						filename: file.name,
+						mode: (!mimes[file.extension]) ? 'json' : mimes[file.extension]
+					}));
+				}
+			});
 	}
 	isFileAlreadyOpened(filename) {
 		let ret = false;

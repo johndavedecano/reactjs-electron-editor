@@ -4,8 +4,9 @@ const {
 } = require('electron');
 const fs = require('fs');
 const path = require('path');
+const iterator = require('./iterator');
 
-// Opens the file
+// Opens the file.
 const openFile = (focusWindow) => {
   dialog.showOpenDialog({ properties: ['openFile'] }, (fileNames) => {
     if (!fileNames) {
@@ -29,6 +30,26 @@ const openFile = (focusWindow) => {
   });
 };
 
+// Opens a folder.
+const openFolder = (focusWindow) => {
+  dialog.showOpenDialog({ properties: ['openDirectory'] }, (fileNames) => {
+    if (!fileNames) {
+      return false;
+    } else {
+      return iterator(fileNames[0])
+        .then((files) => {
+          return focusWindow
+            .webContents
+            .send('folderOpened' , {
+                project: path.basename(fileNames[0]),
+                files
+            });
+        });
+    }
+  });
+};
+
 module.exports = {
-  openFile: openFile
+  openFile,
+  openFolder
 }

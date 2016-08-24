@@ -1,5 +1,5 @@
 const { Menu } = require('electron');
-const { openFile } = require('./events');
+const { openFile, openFolder } = require('./events');
 const template = [
   {
     label: 'File',
@@ -13,8 +13,8 @@ const template = [
       },
       {
         label: 'Open Folder',
-        click: function() {
-          alert("Open Folder");
+        click: function(item, focusedWindow) {
+          return openFolder(focusedWindow);
         }
       },
       {
