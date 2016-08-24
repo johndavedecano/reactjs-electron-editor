@@ -19,10 +19,8 @@ class Tabs extends Component {
 		}
 	}
 	createTab() {
-		return this.props.dispatch(
-			createTab(
-				this.getInitialTabState()
-			)
+		return this.props.onCreate(
+			this.getInitialTabState()
 		);
 	}
 	render() {
@@ -41,9 +39,10 @@ class Tabs extends Component {
 	}
 }
 
-export default connect(function(state) {
-  return {
-  	tabs: state.tabs.items,
-  	active: state.tabs.active
-  }
-})(Tabs);
+Tabs.propTypes = {
+	active: React.PropTypes.number.isRequired,
+  tabs: React.PropTypes.array.isRequired,
+  onCreate: React.PropTypes.func.isRequired
+};
+
+export default Tabs;

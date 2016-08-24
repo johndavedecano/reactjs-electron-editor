@@ -1,6 +1,6 @@
-const { Menu } = require('electron');
+const { Menu, app } = require('electron');
 const { openFile } = require('./events');
-const name = require('electron').remote.app.getName();
+const name = app.getName();
 const template = [
   {
     label: name,

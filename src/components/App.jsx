@@ -5,6 +5,7 @@ import {
 	Content,
 	Pane
 } from 'react-photonkit';
+import { bindActionCreators } from 'redux';
 import Tabs from './Tabs';
 import Editor from './Editor';
 import Files from './Files';
@@ -22,19 +23,20 @@ class App extends Component {
 	constructor(props) {
 	  super(props);
 		this.mountListeners = this.mountListeners.bind(this);
-	  this.onChangeSetting = this.onChangeSetting.bind(this);
+	  	this.onChangeSetting = this.onChangeSetting.bind(this);
 		this.onFileOpen = this.onFileOpen.bind(this);
+		this.onCreate = this.onCreate.bind(this);
 		this.mountListeners();
-		this.state = {
-			updated: 0
-		}
+	}
+	onCreate(setting) {
+		return this.props.dispatch(
+			createTab(setting)
+		);
 	}
 	onChangeSetting(setting) {
-		this.setState({ updated:  1 });
 		this.props.dispatch(
 			updateTab(setting)
 		);
-		this.setState({ updated:  0 });
 	}
 	mountListeners() {
 		this.onFileOpen();
@@ -43,12 +45,11 @@ class App extends Component {
 		ipcRenderer.on('fileOpened', (event, file) => {
 			let activeTab = this.props.tabs[this.props.active];
 			if (this.isFileAlreadyOpened(file.name)) return false;
-			this.setState({ updated:  1 });
 			if (activeTab.value == '') {
 				this.props.dispatch(updateTab({
 					value: file.contents,
 					filename: file.name,
-					mode: (!mimes[file.extension]) ?'json' : mimes[file.extension]
+					mode: (!mimes[file.extension]) ? 'json' : mimes[file.extension]
 				}));
 			} else {
 				this.props.dispatch(createTab({
@@ -58,7 +59,6 @@ class App extends Component {
 					mode: (!mimes[file.extension]) ? 'json' : mimes[file.extension]
 				}));
 			}
-			this.setState({ updated:  0 });
 		});
 	}
 	isFileAlreadyOpened(filename) {
@@ -80,7 +80,6 @@ class App extends Component {
 			overflow: 'hidden',
 			paddingRight: 0
 		}
-		const activeTab = this.props.tabs[this.props.active];
 		return (
 			<Window>
 			  <Content>
@@ -88,17 +87,21 @@ class App extends Component {
 						<Files />
 					</Pane>
 					<div className="pane" style={paneStyles}>
-						<Tabs updated={this.state.updated} />
+						<Tabs tabs={this.props.tabs}
+							onCreate={this.onCreate}
+							active={this.props.active} />
 						<div style={{ clear: 'both'}}></div>
 						<div style={editorWrapper}>
-							<Editor updated={this.state.status} setting={activeTab} onChange={this.onChangeSetting}/>
+							<Editor setting={this.props.activeTab}
+								onChange={this.onChangeSetting}/>
 						</div>
 					</div>
 			  </Content>
 				<footer className="toolbar toolbar-footer">
 				  <div className="toolbar-actions">
 				    <div className="pull-right">
-				      	<Languages status={this.state.status} setting={activeTab} onChange={this.onChangeSetting} />
+				      	<Languages setting={this.props.activeTab}
+				      		onChange={this.onChangeSetting} />
 				    </div>
 				  </div>
 				</footer>
@@ -107,9 +110,14 @@ class App extends Component {
 	}
 }
 
-export default connect(function(state) {
+function mapStateToProps(state) {
   return {
     tabs: state.tabs.items,
-    active: state.tabs.active
-  }
-})(App);
+    active: state.tabs.active,
+    activeTab: state.tabs.items[state.tabs.active]
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(App);

@@ -46,17 +46,17 @@ class Files extends Component {
       this.state.cursor.active = false;
     }
     node.active = true;
-    if(node.children){ node.toggled = toggled; }
+    if(node.children) { node.toggled = toggled; }
     this.setState({ cursor: node });
   }
-	render() {
-		return (
+  render() {
+    return (
       <Treebeard
         data={data}
         onToggle={this.onToggle}
       />
-		);
-	}
+    );
+  }
 }
 
 export default Files;
