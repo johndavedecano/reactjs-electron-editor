@@ -24,7 +24,7 @@
     "express": "^4.14.0",
     "flexboxgrid": "^6.3.1",
     "node-dir": "^0.1.16",
-    "node-sass": "^3.8.0",
+    "node-sass": "^4.14.1",
     "node-uuid": "^1.4.7",
     "react": "^15.3.0",
     "react-ace": "^3.5.0",
